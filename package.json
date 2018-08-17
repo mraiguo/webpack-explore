@@ -1,0 +1,22 @@
+{
+  "name": "webpack-explore",
+  "version": "1.0.0",
+  "description": "webpack 探索",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mraiguo/webpack-explore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mraiguo/webpack-explore/issues"
+  },
+  "homepage": "https://github.com/mraiguo/webpack-explore#readme",
+  "devDependencies": {
+    "webpack": "^4.16.5"
+  }
+}
