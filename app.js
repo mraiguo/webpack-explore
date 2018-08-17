@@ -1,3 +1,4 @@
+import css from './index.css';
 import sum from './tool'
 
-sum (1, 2)
+alert(sum (1, 2))
