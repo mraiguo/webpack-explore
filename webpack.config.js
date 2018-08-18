@@ -32,7 +32,12 @@ const config = {
             chunks: ["main"]   // 使用chunks 需要指定entry 入口文件中的哪一个模块
         }),
         new ExtractTextPlugin('style.css')
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000
+    }
 };
 
 module.exports = config
