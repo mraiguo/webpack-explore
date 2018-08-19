@@ -1,13 +1,15 @@
 const path = require('path') // 引入node的path模块
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 const config = {
     entry: { // 设置打包的入口文件是相对当前路径的app.js文件
         main: path.join(__dirname, './app.jsx')  // app.js作为打包的入口
     },
     output: {
-        filename: 'app.bundle.js', // 打包后输出的文件名为app.bundle.js
+        filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist') // 输出文件存放的文件夹
     },
     module: {
@@ -39,13 +41,16 @@ const config = {
             inject: true,     // | 'head' | 'body' | false  ,注入所有的资源到特定的 template 或者 templateContent 中，如果设置为 true 或者 body，所有的 javascript 资源将被放置到 body 元素的底部，'head' 将放置到 head 元素中。
             chunks: ["main"]   // 使用chunks 需要指定entry 入口文件中的哪一个模块
         }),
-        new ExtractTextPlugin('style.css')
+        new ExtractTextPlugin('style.css'),
+        new CleanWebpackPlugin(['dist']), // 清除dist文件夹下文件
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         // contentBase: path.join(__dirname, 'dist'), // todo：路径问题
         // compress: true, // 启用gzip todo： 好像只有app.bundle.js有启用gzip？
         port: 9000,
         open: true, // 开启服务的时候打开浏览器
+        hot: true
     },
     resolve: {
         extensions: ['.js', '.jsx'], // import js和jsx文件的时候，不用带后缀名
