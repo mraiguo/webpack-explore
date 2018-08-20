@@ -13,7 +13,7 @@ export default class Home extends Component {
         return (
             <div>
                 <div>Home组件</div>
-                <img src="./asset/play.svg" class="tune_svg_width" />
+                <img src="../asset/play.svg" />
             </div>
         )
     }
