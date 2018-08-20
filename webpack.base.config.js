@@ -29,6 +29,17 @@ const config = {
                 exclude: [
                     path.join(__dirname, './node_modules')  // 由于node_modules都是编译过的文件，这里我们不让babel去处理其下面的js文件
                 ],
+            },
+            {
+                test: /\.(jpeg|png|jpg|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: '1024'
+                        }
+                    },
+                ]
             }
         ],
     },

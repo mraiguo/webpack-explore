@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-
+// import axios from 'axios'
+// import imgStr from 'html-loader!../img-html.html'
+var imgStr = require("html-loader!../img-html.html");
+console.log(imgStr)
 export default class Home extends Component {
     // componentDidMount () {
     //     axios.get('http://localhost:9000/api/page').then( data => {
@@ -9,7 +11,10 @@ export default class Home extends Component {
     // }
     render() {
         return (
-           <div>Home组件123</div>
+            <div>
+                <div>Home组件</div>
+                <img src="./asset/play.svg" class="tune_svg_width" />
+            </div>
         )
     }
 }
