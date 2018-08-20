@@ -27,7 +27,7 @@ const config = {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: [
-                    path.join(__dirname, '../node_modules')  // 由于node_modules都是编译过的文件，这里我们不让babel去处理其下面的js文件
+                    path.join(__dirname, './node_modules')  // 由于node_modules都是编译过的文件，这里我们不让babel去处理其下面的js文件
                 ],
             }
         ],

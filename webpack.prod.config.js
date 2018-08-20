@@ -14,7 +14,8 @@ const devConfig = merge(baseConfig, {
             filename: 'index.html',
             template: './template.html'
         })
-    ]
+    ],
+    mode: 'production'
 });
 
 module.exports = devConfig;
