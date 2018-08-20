@@ -16,18 +16,30 @@ const devConfig = merge(baseConfig, {
         })
     ],
     devServer: {
-        // proxy: {
-        //     '/api': {
-        //         target: 'http://localhost:3000',
-        //         secure: 'false',
-        //         // bypass: function(req, res, proxyOptions) {
-        //         //     if (req.headers.accept.indexOf('html') !== -1) {
-        //         //         console.log('Skipping proxy for browser request.');
-        //         //         return '/index.html';
-        //         //     }
-        //         // }
-        //     }
-        // }
+        // todo: proxy选项
+        proxy: {
+            '/page*': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                secure: 'false',
+                bypass: function(req, res, proxyOptions) {
+                    // do sth
+                    // 如果浏览器请求页面返回一个html，
+                    if (req.headers.accept.indexOf('html') !== -1) {
+                        console.log('Skipping proxy for browser request.');
+                        return '/index.html';
+                    }
+                },
+                onProxyReq: function(proxyReq, req, res) {
+                    // do sth
+                    // 如果是post请求 而且请求体存在
+                    // if (req.method === 'POST' && req.body) {
+                    //     const bodyData = querystring.stringify(req.body)
+                    //     proxyReq.write(bodyData)
+                    // }
+                }
+            }
+        }
     },
     mode: 'development'
 });
