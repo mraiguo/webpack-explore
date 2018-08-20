@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const config = {
     entry: { // 设置打包的入口文件是相对当前路径的app.js文件
         main: path.join(__dirname, './app.jsx'),  // app.js作为打包的入口
-        // vendor: ['react', 'react-dom'] // todo：具体效果
+        vendor: ['react', 'react-dom'] // todo：具体效果
     },
     output: {
         filename: '[name].[hash].js',
@@ -27,7 +27,7 @@ const config = {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: [
-                    path.join(__dirname, './node_modules')  // 由于node_modules都是编译过的文件，这里我们不让babel去处理其下面的js文件
+                    path.join(__dirname, './node_modules')  // 由于node_modules都是编译过的文件，这里不让babel去处理其下面的js文件
                 ],
             },
             {
@@ -45,7 +45,14 @@ const config = {
     },
     optimization: { // todo：这个配置的详细
         splitChunks: {
-            chunks: 'async',
+            //  If a string is provided, possible values are all, async, and initial.
+            // Providing all can be particularly powerful because
+            // it means that chunks can be shared even between async and non-async chunks.
+            chunks: 'all',
+            // chunks (chunk) {
+            //     // exclude `my-excluded-chunk`
+            //     return chunk.name !== 'vendor';
+            // },
             minSize: 30000,
             maxSize: 0,
             minChunks: 1,
