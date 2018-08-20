@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = {
     entry: { // 设置打包的入口文件是相对当前路径的app.js文件
@@ -16,11 +17,10 @@ const config = {
         rules:[
             {
                 test: /\.(scss|css)$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    //resolve-url-loader may be chained before sass-loader if necessary
-                    use: ['css-loader', 'sass-loader']
-                })
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader', 'sass-loader', // MiniCssExtractPlugin.loader 和 style-loader 由于某种原因不能共存。todo: 啥原因
+                ]
             },
             // 处理react 相关的内容
             {
@@ -43,6 +43,25 @@ const config = {
             }
         ],
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    chunks: 'initial',
+                    minChunks: 2,
+                    minSize: 0,
+                    maxInitialRequests: 5,
+                },
+                vendor: {
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    name: 'vendor',
+                    priority: 10,
+                    enforce: true,
+                }
+            }
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({   // webpack 指定目录(package内设置)生成静态HTML文件
             title: "指定标题",
@@ -52,7 +71,9 @@ const config = {
             inject: true,     // | 'head' | 'body' | false  ,注入所有的资源到特定的 template 或者 templateContent 中，如果设置为 true 或者 body，所有的 javascript 资源将被放置到 body 元素的底部，'head' 将放置到 head 元素中。
             chunks: ["main"]   // 使用chunks 需要指定entry 入口文件中的哪一个模块
         }),
-        new ExtractTextPlugin('style.css'),
+        new MiniCssExtractPlugin({
+            filename: 'style.css'
+        }),
         new CleanWebpackPlugin(['dist']), // 清除dist文件夹下文件
         new webpack.HotModuleReplacementPlugin()
     ],
