@@ -1,13 +1,13 @@
 const path = require('path') // 引入node的path模块
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = {
     entry: { // 设置打包的入口文件是相对当前路径的app.js文件
-        main: path.join(__dirname, './app.jsx')  // app.js作为打包的入口
+        main: path.join(__dirname, './app.jsx'),  // app.js作为打包的入口
+        // vendor: ['react', 'react-dom'] // todo：具体效果
     },
     output: {
         filename: '[name].[hash].js',
@@ -43,21 +43,25 @@ const config = {
             }
         ],
     },
-    optimization: {
+    optimization: { // todo：这个配置的详细
         splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            maxSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
             cacheGroups: {
-                commons: {
-                    chunks: 'initial',
-                    minChunks: 2,
-                    minSize: 0,
-                    maxInitialRequests: 5,
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
                 },
-                vendor: {
-                    test: /node_modules/,
-                    chunks: 'initial',
-                    name: 'vendor',
-                    priority: 10,
-                    enforce: true,
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
                 }
             }
         }
@@ -75,7 +79,7 @@ const config = {
             filename: 'style.css'
         }),
         new CleanWebpackPlugin(['dist']), // 清除dist文件夹下文件
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
     ],
     devServer: {
         // contentBase: path.join(__dirname, 'dist'), // todo：路径问题
