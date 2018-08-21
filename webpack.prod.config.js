@@ -14,6 +14,10 @@ const devConfig = merge(baseConfig, {
             title: '生产环境标题',
             filename: 'index.html',
             template: './template.html'
+        }),
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+            DEVELOPMENT: JSON.stringify(false),
         })
     ],
     mode: 'production'

@@ -4,6 +4,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+// 获取cross-env NODE_ENV=xx 参数值
+console.log(process.env.NODE_ENV)
+
 const config = {
     entry: { // 设置打包的入口文件是相对当前路径的app.js文件
         main: path.join(__dirname, './app.jsx'),  // app.js作为打包的入口

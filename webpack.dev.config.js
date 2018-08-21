@@ -13,6 +13,11 @@ const devConfig = merge(baseConfig, {
             title: 'react-webpack-demo',
             filename: 'index.html',
             template: './template.html'
+        }),
+        // 创建一个在编译时可以配置的全局常量,在业务代码中获取
+        new webpack.DefinePlugin({
+            DEVELOPMENT: JSON.stringify(true),
+            PRODUCTION: JSON.stringify(false),
         })
     ],
     devServer: {
